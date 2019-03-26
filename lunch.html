@@ -1,0 +1,130 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script src="js/jquery-3.3.1.js"></script>
+		<script>
+			var restaurant  = {"restaurants":[
+	{"name":"橋香園","distance":"近","people":"0","takeaway":"Y","remarks":""},
+	{"name":"車仔面世家","distance":"遠","people":"0","takeaway":"Y","remarks":""},
+	{"name":"忠記粥品","distance":"中","people":"3","takeaway":"Y","remarks":""},
+	{"name":"廿一堂","distance":"中","people":"4","takeaway":"Y","remarks":""},
+	{"name":"品越","distance":"中","people":"4","takeaway":"N","remarks":""},
+	{"name":"龍記","distance":"中","people":"4","takeaway":"N","remarks":""},
+	{"name":"新森林","distance":"近","people":"4","takeaway":"Y","remarks":""},
+	{"name":"權記雲吞","distance":"近","people":"4","takeaway":"Y","remarks":""},
+	{"name":"多寶樂","distance":"遠","people":"4","takeaway":"N","remarks":""},
+	{"name":"生記清湯腩/魚湯米","distance":"遠","people":"4","takeaway":"N","remarks":""},
+	{"name":"永和快餐","distance":"遠","people":"4","takeaway":"N","remarks":""},
+	{"name":"科記","distance":"遠","people":"4","takeaway":"N","remarks":""},
+	{"name":"上環食堂","distance":"中","people":"5","takeaway":"N","remarks":""},
+	{"name":"鐵牛","distance":"中","people":"5","takeaway":"N","remarks":""},
+	{"name":"瘋狂小麵","distance":"中","people":"5","takeaway":"N","remarks":""},
+	{"name":"水記","distance":"近","people":"5","takeaway":"N","remarks":""},
+	{"name":"健康食品拉麵","distance":"近","people":"5","takeaway":"N","remarks":""},
+	{"name":"小雨天","distance":"近","people":"5","takeaway":"N","remarks":""},
+	{"name":"筷子記","distance":"近","people":"5","takeaway":"Y","remarks":""},
+	{"name":"咪咪","distance":"遠","people":"5","takeaway":"N","remarks":""},
+	{"name":"龍邦","distance":"遠","people":"5","takeaway":"N","remarks":""},
+	{"name":"紅城","distance":"中","people":"6","takeaway":"Y","remarks":""},
+	{"name":"熟食中心","distance":"遠","people":"6","takeaway":"N","remarks":""},
+	{"name":"寶湖","distance":"中","people":"12","takeaway":"N","remarks":""},
+	{"name":"潮江春","distance":"遠","people":"12","takeaway":"N","remarks":""}
+	]}
+
+	//parameter badWeather, takeAway
+	var badWeather   =     false;
+	var maxPPL  =  3;
+	var takeAway   =  false;
+	var pool =[];
+	var itemCount   =  restaurant.restaurants.length;
+	var url  =  location.href.toLowerCase();
+	if (url.indexOf("badweather=1") > -1){
+		badWeather   =     true;
+		
+	}
+	
+	if (url.indexOf("people=") > -1){
+		maxPPL   =   new URLSearchParams(new URL(url).search).get('people')
+		
+	}
+	
+	
+	if (url.indexOf("takeaway=1") > -1){
+		takeAway   =  true;
+	
+	}
+
+	for (i=0;i<itemCount-1;i++){
+	 
+		var check1, check2,doubleAdd;
+		check1 =  false;
+		check2 =  false;
+		doubleAdd = false;
+
+	if (takeAway) {
+		if((restaurant.restaurants[i].takeaway == "Y")){
+			check1  =  true;
+		}else{
+			check1  =  false;
+		}
+	} else {
+		check1  =  true;
+	}
+	
+	if (badWeather){
+		if (restaurant.restaurants[i].distance == "遠"){
+			check2  =  false;
+		} else {
+			check2  =  true;
+			if (restaurant.restaurants[i].distance == "近"){
+				doubleAdd  =  true;
+			}
+		}
+	 
+	 }else{
+		check2  =  true;
+	 }
+
+	 
+	if(check1 && check2){
+	
+	if (!takeAway){
+	
+		if(maxPPL <= parseInt(restaurant.restaurants[i].people)){
+	
+		
+	
+			pool.push(restaurant.restaurants[i].name)
+			if(doubleAdd){
+				pool.push(restaurant.restaurants[i].name)
+			}
+		}
+}else{
+
+		pool.push(restaurant.restaurants[i].name)
+			if(doubleAdd){
+				pool.push(restaurant.restaurants[i].name)
+			}
+
+}
+	}
+	
+	
+	}
+	
+	console.log(pool)
+	if (pool.length > 0){
+	if (badWeather){document.write('天氣差，近近地')}
+	
+	document.write(maxPPL + '個人去 '  + pool[Math.floor(Math.random() * pool.length)])	;
+ if (takeAway){document.write(' 叫外賣啦')}else{
+ 
+document.write(' 啦')	;}
+ } else {
+ document.write('返印度食Banana')
+ 
+ }
+
+		</script>
+	</head>
+</html>
