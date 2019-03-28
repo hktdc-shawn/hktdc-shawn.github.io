@@ -114,12 +114,10 @@
 	
 	console.log(pool)
 	if (pool.length > 0){
-	if (badWeather){document.write('天氣差，近近地')}
+	if (badWeather){document.write('天氣差<br><br>')}
 	
-	document.write(maxPPL + '個人去 '  + pool[Math.floor(Math.random() * pool.length)])	;
- if (takeAway){document.write(' 叫外賣啦')}else{
- 
-document.write(' 啦')	;}
+	document.write(maxPPL + '個人<br><br>'  + pool[Math.floor(Math.random() * pool.length)])	;
+ if (takeAway){document.write('* 外賣')} 
  } else {
  document.write('返印度食Banana')
  
